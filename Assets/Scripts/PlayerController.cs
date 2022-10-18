@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public bool CanDash = false;
     public bool IsAllBlocksGone = false;
     public bool HasSpeed = false;
+    public bool IsOnGround;
+    private bool IsOnGround2;
 
     public GameObject Arrow;
     private Vector3 currentDirection;
@@ -60,7 +62,12 @@ public class PlayerController : MonoBehaviour
         Arrow.transform.LookAt(new Vector3((Arrow.transform.position.x * 2) - transform.position.x, transform.position.y, (Arrow.transform.position.z * 2) - transform.position.z));
 
         if (CoolDown > 0) { CoolDown -= Time.deltaTime; }
-       
+
+        if (Input.GetKey("space") && IsOnGround == true)
+        {
+            IsOnGround2 = true;
+        }
+
         //Shows Speed
         SpeedText.text = "Speed: " + Mathf.Round((float)VelocityTotal).ToString();
 
@@ -107,6 +114,13 @@ public class PlayerController : MonoBehaviour
             CoolDown = 0.7f; 
         }
 
+        //Jump
+        if (IsOnGround2 == true)
+        {
+            rb.AddForce(new Vector3(0.0f, 3.0f, 0.0f), ForceMode.Impulse);
+            IsOnGround2 = false;
+        }
+
         //Speed Cap
         if (Math.Sqrt(Math.Pow(rb.velocity.x, 2) + Math.Pow(rb.velocity.z, 2)) >= 12.0f && CoolDown <= 0.5f)
         {
@@ -140,6 +154,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Void"))
         {
+            rb.AddForce(new Vector3(-rb.velocity.x, -rb.velocity.y, -rb.velocity.z), ForceMode.Impulse);
             transform.position = PlayerStartPoint;
         }
     }
