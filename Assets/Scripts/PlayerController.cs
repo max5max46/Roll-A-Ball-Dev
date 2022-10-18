@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float CoolDown = 0;
     public double VelocityTotal;
     private Vector3 offset = new Vector3(0.0f, 9f, -10f);
+    private Vector3 PlayerStartPoint;
 
     public bool CanDash = false;
     public bool IsAllBlocksGone = false;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerStartPoint = transform.position;
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Speed Cap
-        if (Math.Sqrt(Math.Pow(rb.velocity.x, 2) + Math.Pow(rb.velocity.z, 2)) >= 15.0f && CoolDown <= 0.4f)
+        if (Math.Sqrt(Math.Pow(rb.velocity.x, 2) + Math.Pow(rb.velocity.z, 2)) >= 12.0f && CoolDown <= 0.5f)
         {
             rb.AddForce(new Vector3(-rb.velocity.x, 0.0f, -rb.velocity.z));
         }
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Void"))
         {
-            transform.position = new Vector3(-36.07f, 0.5f, 0.0f);
+            transform.position = PlayerStartPoint;
         }
     }
 }

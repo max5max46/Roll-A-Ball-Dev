@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerGroundDetector : MonoBehaviour
 {
     public PlayerController Player;
+    private bool IsSpacePressed;
 
     // Start is called before the first frame update
     void Start()
@@ -15,18 +16,17 @@ public class PlayerGroundDetector : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3 (Player.transform.position.x, Player.transform.position.y - 0.2f, Player.transform.position.z);
-
+        if (Input.GetKeyDown("space"))
+            IsSpacePressed = true;
     }
     public void OnTriggerStay (Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            if (Input.GetKey("space"))
+            if (IsSpacePressed == true)
             {
-                if (Input.GetKey("space"))
-                {
-                    Player.rb.AddForce(new Vector3(0.0f, 2.0f, 0.0f), ForceMode.Impulse);
-                }
+                Player.rb.AddForce(new Vector3(0.0f, 7.0f, 0.0f), ForceMode.Impulse);
+                IsSpacePressed = false;
             }
         }
     }
