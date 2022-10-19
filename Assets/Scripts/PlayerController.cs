@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
             IsOnGround2 = true;
         }
 
+        
+
         //Shows Speed
         SpeedText.text = "Speed: " + Mathf.Round((float)VelocityTotal).ToString();
 
