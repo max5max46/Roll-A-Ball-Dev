@@ -44,6 +44,6 @@ public class PauseMenuController : MonoBehaviour
             }
         }
         if (Input.GetKeyDown("r"))
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Scene Alpha");
     }
 }
