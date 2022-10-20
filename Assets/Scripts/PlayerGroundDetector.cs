@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerGroundDetector : MonoBehaviour
 {
     public PlayerController Player;
+    int JumpFix = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +19,15 @@ public class PlayerGroundDetector : MonoBehaviour
     }
     public void OnTriggerEnter (Collider other)
     {
-       
         if (other.gameObject.CompareTag("Ground"))
         {
-            Player.IsOnGround = true;
+            JumpFix += 1;
         }
+
+        if (JumpFix <= 0)
+            Player.IsOnGround = false;
+        else
+            Player.IsOnGround = true;
     }
 
     public void OnTriggerExit(Collider other)
@@ -30,8 +35,13 @@ public class PlayerGroundDetector : MonoBehaviour
 
         if (other.gameObject.CompareTag("Ground"))
         {
-            Player.IsOnGround = false;
+            JumpFix -= 1;
         }
+
+        if (JumpFix <= 0)
+            Player.IsOnGround = false;
+        else
+            Player.IsOnGround = true;
     }
 
 }
